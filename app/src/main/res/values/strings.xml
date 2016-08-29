@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="grid_num_columns">"2"</string>
+    <string name="menu_item_sort_by_ratings">Sort by ratings</string>
+    <string name="menu_item_sort_by_popularity">Sort by popularity</string>
+    <string name="movie_release_date">Release Date:</string>
+    <string name="movie_rating">Rating:</string>
+    <string name="movie_popularity">Popularity:</string>
+
+
+
+</resources>

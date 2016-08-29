@@ -1,0 +1,48 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="MatchWidthAndWrapHeight">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="Title" parent="MatchWidthAndWrapHeight">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/movie_header_text_size</item>
+        <item name="android:paddingTop">@dimen/movie_header_padding_top</item>
+        <item name="android:paddingBottom">@dimen/movie_header_padding_bottom</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="MovieDetailNormalText" parent="MatchWidthAndWrapHeight">
+        <item name="android:textSize">@dimen/movie_detail_text_size</item>
+    </style>
+
+    <style name="MovieDetailBoldText" parent="MovieDetailNormalText">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="VerticalLinearLayout" parent="MatchWidthAndWrapHeight">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HorizontalLinearLayout" parent="MatchWidthAndWrapHeight">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="MovieImage">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
+
+</resources>
