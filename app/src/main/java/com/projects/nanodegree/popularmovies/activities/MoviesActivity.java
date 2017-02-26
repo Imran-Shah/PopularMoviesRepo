@@ -32,7 +32,7 @@ public class MoviesActivity extends AppCompatActivity {
         detailsContainer = (FrameLayout)findViewById(R.id.detailsContainer);
         if(detailsContainer!=null) {
             isMultiPane = true;
-            Toast.makeText(getApplicationContext(),  PLEASE_TAP_ON_A_MOVIE_THUMBNAIL_TO_SEE_MORE_DETAILS, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),  PLEASE_TAP_ON_A_MOVIE_THUMBNAIL_TO_SEE_MORE_DETAILS, Toast.LENGTH_SHORT).show();
         }
 
 

@@ -2,6 +2,7 @@ package com.projects.nanodegree.popularmovies.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,10 @@ import java.util.ArrayList;
 public class MoviesFragment extends BaseFragment implements MoviesListener {
 
     private static final String UNABLE_TO_FETCH_MOVIES = "Unable to fetch movies";
+    private static final String CURRENT_FILTER = "current_filter";
+    private static final String MOVIES = "movies";
+
+
 
     MoviesActivity activity;
     private GridView gridView;
@@ -52,8 +57,15 @@ public class MoviesFragment extends BaseFragment implements MoviesListener {
             setCurrentFilter(Constants.POPULAR);
             moviesPresenter.fetchMovies(Constants.POPULAR);
         }
-        else
+        else if(savedInstanceState!=null) {
+            setCurrentFilter(savedInstanceState.getString(CURRENT_FILTER));
+            popularMovies = savedInstanceState.getParcelable(MOVIES);
+            if(popularMovies!=null)
+            onGetMoviesSuccess(popularMovies);
+
+        } else{
             activity.alertUser();
+        }
 
 
         setUpListeners();
@@ -115,7 +127,7 @@ public class MoviesFragment extends BaseFragment implements MoviesListener {
 
     @Override
     public void onGetMoviesFailure() {
-        Toast.makeText(getContext(), UNABLE_TO_FETCH_MOVIES, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), UNABLE_TO_FETCH_MOVIES, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -125,7 +137,7 @@ public class MoviesFragment extends BaseFragment implements MoviesListener {
         if (adapter == null) {
             adapter = new GridAdapter(getActivity().getApplicationContext(), movies);
             if (gridView != null) gridView.setAdapter(adapter);
-            if(popularMovies.getMovies()!=null)
+            if(popularMovies!=null && popularMovies.getMovies()!=null)
                 activity.loadMovieDetails(movies.get(0));
 
         } else {
@@ -138,17 +150,23 @@ public class MoviesFragment extends BaseFragment implements MoviesListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
-        if (NetworkUtils.isNetworkConnected(getActivity().getApplicationContext())) {
             setUpOptions(item);
-        } else {
-            activity.alertUser();
-
-        }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        outState.putString(CURRENT_FILTER, getCurrentFilter());
+        outState.putParcelable(MOVIES, popularMovies);
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
 
     private void setUpOptions(MenuItem item) {
 
