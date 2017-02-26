@@ -19,6 +19,7 @@ import com.projects.nanodegree.popularmovies.utils.Constants;
 
 public class MoviesActivity extends AppCompatActivity {
 
+    private static final String PLEASE_TAP_ON_A_MOVIE_THUMBNAIL_TO_SEE_MORE_DETAILS = "Please tap on a movie thumbnail to see more details";
     private PopularMoviesModel popularMovies;
     private FrameLayout detailsContainer;
     private boolean isMultiPane;
@@ -31,7 +32,7 @@ public class MoviesActivity extends AppCompatActivity {
         detailsContainer = (FrameLayout)findViewById(R.id.detailsContainer);
         if(detailsContainer!=null) {
             isMultiPane = true;
-            //Toast.makeText(getApplicationContext(), "Please tap on a movie thumbnail to see more details", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),  PLEASE_TAP_ON_A_MOVIE_THUMBNAIL_TO_SEE_MORE_DETAILS, Toast.LENGTH_LONG).show();
         }
 
 
@@ -97,24 +98,5 @@ public class MoviesActivity extends AppCompatActivity {
 
         }
     }
-
-
-
-    public void initialLoad(MovieDetailModel movieDetailModel) {
-        //if (adapter != null) {
-
-        MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.BUNDLE_MOVIE_DETAIL, movieDetailModel);
-        movieDetailFragment.setArguments(bundle);
-        if (isMultiPane)
-            //{
-            getSupportFragmentManager().beginTransaction().replace(R.id.detailsContainer, movieDetailFragment).commit();
-        //  }
-    }
-
-
-
-
 
 }

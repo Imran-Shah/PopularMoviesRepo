@@ -58,7 +58,7 @@ public class FavoriteService extends IntentService {
                     getApplicationContext().getContentResolver().bulkInsert(MoviesContract.VideoEntry.CONTENT_URI,
                             TrailersConverter.convert(movieDetail.getTrailerList(), movieDetail.getId()));
                 }
-                notifyFavUpdate(movieDetail.getTitle() + SPACE + ADDED_TO_FAVORITES);
+                alertUser(movieDetail.getTitle() + SPACE + ADDED_TO_FAVORITES);
             } else {
                 deleteFavourite();
             }
@@ -86,12 +86,12 @@ public class FavoriteService extends IntentService {
             getApplicationContext().getContentResolver().delete(MoviesContract.VideoEntry.CONTENT_URI,
                     selectionTrailer, selectionArgs);
 
-            notifyFavUpdate(movieDetail.getTitle() + SPACE + REMOVED_FROM_FAVORITES);
+            alertUser(movieDetail.getTitle() + SPACE + REMOVED_FROM_FAVORITES);
         }
 
     }
 
-    private void notifyFavUpdate(String text) {
+    private void alertUser(String text) {
         final String message = String.format(text, movieDetail.getTitle());
         Handler mHandler = new Handler(getMainLooper());
         mHandler.post(new Runnable() {

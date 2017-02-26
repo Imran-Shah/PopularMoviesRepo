@@ -69,17 +69,6 @@ public class MoviesContract {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(VIDEO_PATH).build();
 
-        public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + MOVIE_PATH;
-
-        public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + MOVIE_PATH;
-
-        public static Uri buildMoviePathWithVideos(long movieId) {
-            return BASE_CONTENT_URI.buildUpon().appendPath(MOVIE_PATH)
-                    .appendPath(Long.toString(movieId)).appendPath(VIDEO_PATH).build();
-        }
-
         public static Uri buildVideoUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
         }
@@ -98,17 +87,6 @@ public class MoviesContract {
         public static final String COLUMN_URL = "url";
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(REVIEW_PATH).build();
-
-        public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + MOVIE_PATH;
-
-        public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + MOVIE_PATH;
-
-        public static Uri buildMoviePathWithReviews(long movieId) {
-            return BASE_CONTENT_URI.buildUpon().appendPath(MOVIE_PATH)
-                    .appendPath(Long.toString(movieId)).appendPath(REVIEW_PATH).build();
-        }
 
         public static Uri buildReviewUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();

@@ -13,19 +13,21 @@ import android.net.Uri;
 
 public class MoviesProvider extends ContentProvider {
 
-    public static final int MOVIE = 100;
+    public static final int MOVIE = 1;
 
-    public static final int MOVIE_BY_ID = 101;
+    public static final int MOVIE_BY_ID = 2;
 
-    public static final int SORTED_MOVIE = 102;
+    public static final int SORTED_MOVIE = 3;
 
-    public static final int VIDEO = 103;
+    public static final int VIDEO = 4;
 
-    public static final int REVIEW = 104;
+    public static final int REVIEW = 5;
 
-    public static final int MOVIE_VIDEOS = 105;
+    public static final int MOVIE_VIDEOS = 6;
 
-    public static final int MOVIE_REVIEWS = 106;
+    public static final int MOVIE_REVIEWS = 7;
+    private static final String URI_NOT_SUPPORTED = "URI not supported Exception:";
+    private static final String SQL_EXCEPTION = " SQL Exception : Failed to insert row into ";
 
 
     private MoviesDatabaseHelper dbHelper;
@@ -58,7 +60,7 @@ public class MoviesProvider extends ContentProvider {
                 result = dbHelper.getReadableDatabase().query(MoviesContract.ReviewEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
-                throw new UnsupportedOperationException("URI not supported:" + uri);
+                throw new UnsupportedOperationException(URI_NOT_SUPPORTED + uri);
         }
         return result;
     }
@@ -75,7 +77,7 @@ public class MoviesProvider extends ContentProvider {
             case MOVIE_BY_ID:
                 return MoviesContract.MovieEntry.CONTENT_ITEM_TYPE;
             default:
-                throw new UnsupportedOperationException("URI not supported:" + uri);
+                throw new UnsupportedOperationException(URI_NOT_SUPPORTED + uri);
         }
     }
 
@@ -92,7 +94,7 @@ public class MoviesProvider extends ContentProvider {
                 if (id > 0)
                     result = MoviesContract.MovieEntry.buildMovieUri(Long.toString(id));
                 else
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                    throw new android.database.SQLException(SQL_EXCEPTION + uri);
 
                 break;
             }
@@ -101,7 +103,7 @@ public class MoviesProvider extends ContentProvider {
                 if (id > 0)
                     result = MoviesContract.VideoEntry.buildVideoUri(Long.toString(id));
                 else
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                    throw new android.database.SQLException(SQL_EXCEPTION + uri);
 
                 break;
             }
@@ -110,12 +112,12 @@ public class MoviesProvider extends ContentProvider {
                 if (id > 0)
                     result = MoviesContract.ReviewEntry.buildReviewUri(Long.toString(id));
                 else
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                    throw new android.database.SQLException(SQL_EXCEPTION + uri);
 
                 break;
             }
             default:
-                throw new UnsupportedOperationException("URI not supported:" + uri);
+                throw new UnsupportedOperationException(URI_NOT_SUPPORTED + uri);
         }
         database.close();
         getContext().getContentResolver().notifyChange(result, null);
@@ -146,7 +148,7 @@ public class MoviesProvider extends ContentProvider {
                 break;
             }
             default:
-                throw new UnsupportedOperationException("URI not supported:" + uri);
+                throw new UnsupportedOperationException(URI_NOT_SUPPORTED + uri);
         }
         database.close();
 
