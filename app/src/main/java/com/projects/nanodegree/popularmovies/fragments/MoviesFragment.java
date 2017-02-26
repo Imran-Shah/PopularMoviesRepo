@@ -53,23 +53,21 @@ public class MoviesFragment extends BaseFragment implements MoviesListener {
         setHasOptionsMenu(true);
         gridView = (GridView) view.findViewById(R.id.grid_view_movies);
         moviesPresenter = new MoviesPresenter(this, getActivity().getApplicationContext());
-        if (NetworkUtils.isNetworkConnected(getActivity().getApplicationContext())) {
-            setCurrentFilter(Constants.POPULAR);
-            moviesPresenter.fetchMovies(Constants.POPULAR);
-        }
-        else if(savedInstanceState!=null) {
-            setCurrentFilter(savedInstanceState.getString(CURRENT_FILTER));
+
+        String currentFilter = savedInstanceState!=null && savedInstanceState.getString(CURRENT_FILTER)!=null? savedInstanceState.getString(CURRENT_FILTER): getCurrentFilter();
+        if(currentFilter!=null) setCurrentFilter(currentFilter);
+
+        if(Constants.FAVORITES.equals(currentFilter)|| NetworkUtils.isNetworkConnected(getActivity().getApplicationContext()))
+            moviesPresenter.fetchMovies(currentFilter);
+
+        else if(savedInstanceState!=null && savedInstanceState.getParcelable(MOVIES)!=null) {
             popularMovies = savedInstanceState.getParcelable(MOVIES);
-            if(popularMovies!=null)
             onGetMoviesSuccess(popularMovies);
 
-        } else{
-            activity.alertUser();
-        }
+        } else activity.alertUser();
 
 
         setUpListeners();
-
 
     }
 
@@ -81,7 +79,7 @@ public class MoviesFragment extends BaseFragment implements MoviesListener {
 
 
     public String getCurrentFilter() {
-        return currentFilter;
+        return currentFilter!=null? currentFilter: Constants.POPULAR;
     }
 
     public void setCurrentFilter(String currentFilter) {
