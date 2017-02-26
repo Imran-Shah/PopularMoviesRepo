@@ -9,7 +9,6 @@
         android:id="@+id/grid_view_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="@integer/grid_no_of_columns"
-        />
+        android:numColumns="@integer/grid_no_of_columns" />
 
 </FrameLayout>

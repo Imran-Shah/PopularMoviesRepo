@@ -20,6 +20,8 @@
         <item name="android:paddingBottom">@dimen/movie_header_padding_bottom</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:gravity">center</item>
+
+
     </style>
 
 

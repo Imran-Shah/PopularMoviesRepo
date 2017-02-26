@@ -1,50 +1,51 @@
 package com.projects.nanodegree.popularmovies.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.projects.nanodegree.popularmovies.R;
-import com.projects.nanodegree.popularmovies.adapters.GridAdapter;
+import com.projects.nanodegree.popularmovies.fragments.MovieDetailFragment;
+import com.projects.nanodegree.popularmovies.models.MovieDetailModel;
 import com.projects.nanodegree.popularmovies.models.PopularMoviesModel;
 import com.projects.nanodegree.popularmovies.utils.Constants;
-import com.projects.nanodegree.popularmovies.utils.NetworkUtils;
-
-import java.io.IOException;
 
 public class MoviesActivity extends AppCompatActivity {
 
-    private GridView gridView;
-    private GridAdapter adapter;
-    private String currentFilter;
     private PopularMoviesModel popularMovies;
+    private FrameLayout detailsContainer;
+    private boolean isMultiPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movies);
+        setContentView(R.layout.activity_main);
 
-        gridView = (GridView) findViewById(R.id.grid_view_movies);
-
-        if (NetworkUtils.isNetworkConnected(getApplicationContext())) {
-            new NetworkTask().execute(Constants.POPULAR);
-        } else {
-            alertUser();
+        detailsContainer = (FrameLayout)findViewById(R.id.detailsContainer);
+        if(detailsContainer!=null) {
+            isMultiPane = true;
+            //Toast.makeText(getApplicationContext(), "Please tap on a movie thumbnail to see more details", Toast.LENGTH_LONG).show();
         }
 
-        setUpListeners();
 
 
     }
 
-    private void alertUser() {
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(name, context, attrs);
+    }
+
+
+
+    public void alertUser() {
         Toast.makeText(getApplicationContext(), Constants.CHECK_CONNECTIVITY, Toast.LENGTH_SHORT).show();
     }
 
@@ -57,14 +58,7 @@ public class MoviesActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (NetworkUtils.isNetworkConnected(getApplicationContext())) {
-            setUpOptions(item);
-        } else {
-            alertUser();
-
-        }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
@@ -82,86 +76,45 @@ public class MoviesActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    private void setUpListeners() {
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                loadMovieDetails(position);
-            }
-        });
-
-    }
-
-
-    private void setUpOptions(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings_sort_by_ratings && getCurrentFilter() != Constants.TOP_RATED) {
-            new NetworkTask().execute(Constants.TOP_RATED);
-
-        } else if (item.getItemId() == R.id.action_settings_sort_by_popularity && getCurrentFilter() != Constants.POPULAR) {
-            new NetworkTask().execute(Constants.POPULAR);
-
-        } else {
-            Toast.makeText(getApplicationContext(), Constants.ALREADY_SORTED, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public String getCurrentFilter() {
-        return currentFilter;
-    }
-
-    public void setCurrentFilter(String currentFilter) {
-        this.currentFilter = currentFilter;
-    }
 
     public void setPopularMovies(PopularMoviesModel popularMovies) {
         this.popularMovies = popularMovies;
     }
 
+    public void loadMovieDetails(MovieDetailModel movieDetailModel) {
 
-    private class NetworkTask extends AsyncTask<String, Void, PopularMoviesModel> {
-
-
-        @Override
-        protected PopularMoviesModel doInBackground(String... params) {
-            try {
-                setCurrentFilter(params[0]);
-                return NetworkUtils.fetchData(params[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-
-            }
-        }
-
-        @Override
-        protected void onPostExecute(PopularMoviesModel popularMovies) {
-
-            if (popularMovies != null) {
-
-                setPopularMovies(popularMovies);
-                if (adapter == null) {
-                    adapter = new GridAdapter(getApplicationContext(), popularMovies.getMovies());
-                    if (gridView != null) gridView.setAdapter(adapter);
-                } else {
-                    adapter.setMovies(popularMovies.getMovies());
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        }
-
-    }
-
-
-    private void loadMovieDetails(int position) {
-        if (adapter != null) {
-
+            MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constants.BUNDLE_MOVIE_DETAIL, movieDetailModel);
+             movieDetailFragment.setArguments(bundle);
+            if(isMultiPane)
+                getSupportFragmentManager().beginTransaction().replace(R.id.detailsContainer, movieDetailFragment).commit();
+        else{
             Intent intent = new Intent(this, MovieDetailActivity.class);
-            intent.putExtra(Constants.BUNDLE_MOVIE_DETAIL, adapter.getMovieDetail(position));
+            intent.putExtra(Constants.BUNDLE_MOVIE_DETAIL, movieDetailModel);
             startActivity(intent);
 
         }
     }
+
+
+
+    public void initialLoad(MovieDetailModel movieDetailModel) {
+        //if (adapter != null) {
+
+        MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.BUNDLE_MOVIE_DETAIL, movieDetailModel);
+        movieDetailFragment.setArguments(bundle);
+        if (isMultiPane)
+            //{
+            getSupportFragmentManager().beginTransaction().replace(R.id.detailsContainer, movieDetailFragment).commit();
+        //  }
+    }
+
+
+
 
 
 }

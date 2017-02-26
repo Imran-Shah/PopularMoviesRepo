@@ -3,9 +3,16 @@
     <string name="grid_num_columns">"2"</string>
     <string name="menu_item_sort_by_ratings">Sort by ratings</string>
     <string name="menu_item_sort_by_popularity">Sort by popularity</string>
+    <string name="menu_item_favorites">Favorites</string>
+
     <string name="movie_release_date">Release Date:</string>
     <string name="movie_rating">Rating:</string>
     <string name="movie_popularity">Popularity:</string>
+    <string name="movie_trailers">Trailers:</string>
+    <string name="movie_reviews">Reviews:</string>
+    <string name="movie_thumbnail">Movie Thumbnail</string>
+    <string name="favorite">Set/Remove as favorite</string>
+    <string name="read_more">Read More</string>
 
 
 

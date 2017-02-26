@@ -3,10 +3,12 @@ package com.projects.nanodegree.popularmovies.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by Imran on 8/18/16.
  */
-public class MovieDetailModel implements Parcelable {
+public class MovieDetailModel implements Parcelable{
 
     private String posterPath;
     private String isAdult;
@@ -21,9 +23,15 @@ public class MovieDetailModel implements Parcelable {
     private String voteCount;
     private String video;
     private String voteAverage;
+    private boolean isFavorite;
+
+    List<ReviewItemModel> reviewsList;
+
+    List<TrailerItemModel> trailerList;
 
     public MovieDetailModel() {
     }
+
 
     protected MovieDetailModel(Parcel in) {
         posterPath = in.readString();
@@ -39,6 +47,9 @@ public class MovieDetailModel implements Parcelable {
         voteCount = in.readString();
         video = in.readString();
         voteAverage = in.readString();
+        isFavorite = in.readByte() != 0;
+        reviewsList = in.createTypedArrayList(ReviewItemModel.CREATOR);
+        trailerList = in.createTypedArrayList(TrailerItemModel.CREATOR);
     }
 
     @Override
@@ -56,6 +67,9 @@ public class MovieDetailModel implements Parcelable {
         dest.writeString(voteCount);
         dest.writeString(video);
         dest.writeString(voteAverage);
+        dest.writeByte((byte) (isFavorite ? 1 : 0));
+        dest.writeTypedList(reviewsList);
+        dest.writeTypedList(trailerList);
     }
 
     @Override
@@ -179,5 +193,27 @@ public class MovieDetailModel implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
+    public List<ReviewItemModel> getReviewsList() {
+        return reviewsList;
+    }
 
+    public void setReviewsList(List<ReviewItemModel> reviewsList) {
+        this.reviewsList = reviewsList;
+    }
+
+    public List<TrailerItemModel> getTrailerList() {
+        return trailerList;
+    }
+
+    public void setTrailerList(List<TrailerItemModel> trailerList) {
+        this.trailerList = trailerList;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 }

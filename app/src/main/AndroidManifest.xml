@@ -22,6 +22,10 @@
         </activity>
 
         <activity android:name=".activities.MovieDetailActivity"/>
+        <service android:name=".services.FavoriteService" android:exported="false"></service>
+        <provider
+            android:authorities="com.projects.nanodegree.popularmovies"
+            android:name=".provider.MoviesProvider"></provider>
     </application>
 
 </manifest>

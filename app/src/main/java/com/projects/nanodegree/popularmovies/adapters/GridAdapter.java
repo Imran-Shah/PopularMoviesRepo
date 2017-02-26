@@ -48,6 +48,11 @@ public class GridAdapter extends ArrayAdapter {
 
     }
 
+    @Override
+    public int getCount() {
+        return movies!=null? movies.size(): 0;
+    }
+
     public void setMovies(List<MovieDetailModel> movies) {
         this.movies = movies;
     }
@@ -57,4 +62,6 @@ public class GridAdapter extends ArrayAdapter {
         else return null;
 
     }
+
+
 }

@@ -7,10 +7,16 @@
         android:id="@+id/action_settings_sort_by_popularity"
         android:title="@string/menu_item_sort_by_popularity"
         android:orderInCategory="100"
-        app:showAsAction="withText" />
+        app:showAsAction="withText|collapseActionView" />
     <item
         android:id="@+id/action_settings_sort_by_ratings"
         android:title="@string/menu_item_sort_by_ratings"
+        android:orderInCategory="100"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/action_settings_favorites"
+        android:title="@string/menu_item_favorites"
         android:orderInCategory="100"
         app:showAsAction="withText" />
 

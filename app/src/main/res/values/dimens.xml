@@ -8,7 +8,7 @@
     <dimen name="movie_header_padding_top">20dp</dimen>
     <dimen name="movie_header_padding_bottom">20dp</dimen>
     <dimen name="zero_dp">0dp</dimen>
-
+    <dimen name="icon_min_height">100dp</dimen>
 
 
 </resources>
