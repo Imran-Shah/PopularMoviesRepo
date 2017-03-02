@@ -47,7 +47,7 @@ public class MoviesPresenter {
         public void onResponse(Object response) {
 
             if(response instanceof PopularMovies){
-                moviesInterface.onGetMoviesSuccess(MoviesConverter.convert((PopularMovies) response));
+                moviesInterface.onGetMoviesSuccess(MoviesConverter.convert((PopularMovies) response), true);
             }else{
                 moviesInterface.onGetMoviesFailure();
             }

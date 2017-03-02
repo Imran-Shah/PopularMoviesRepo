@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public interface MoviesListener {
 
-    void onGetMoviesSuccess(PopularMoviesModel response);
+    void onGetMoviesSuccess(PopularMoviesModel response, boolean isNewResponse);
     void onGetMoviesFailure();
     void onGetFavorites(ArrayList<MovieDetailModel> movies);
 }
